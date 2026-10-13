@@ -1,0 +1,23 @@
+[Clear Comments]
+Search : (\/\/.*?$)|(\/\*.+?\*\/)
+Replace: ()
+
+[Consolidate Spaces]
+Search : \s+
+Replace: ( )
+
+[Eliminate Spaces Around: Single Char Operators]
+Search : \s*((?:[\*\/\%\:\<\>\.\!\;\,]|(?:(?<!\&)\&(?!\&))|(?:(?<!\=)\=(?!\=))|(?:(?<!\+)\+(?!\+))|(?:(?<!\-)\-(?!\-))|(?:(?<!\?)\?(?!\?))|(?:(?<!\^)\^(?!\^)))(?!=\=))\s*
+Replace: $1
+
+[Eliminate Spaces Around: Multi-Char Operators]
+Search : \s*((?:\&\&)|(?:\|\|)|(?:\^\^)|(?:\+\+)|(?:\-\-)|(?:\<\=)|(?:\>\=)|(?:\+\=)|(?:\-\=)|(?:\*\=)|(?:\/\=)|(?:\&\=)|(?:\|\=))\s*
+Replace: $1
+
+[Eliminate Spaces Around Enclosing Symbols]
+Search : \s*([\(\)\[\]\{\}])\s*
+Replace: $1
+
+[Add JavaScript Label]
+Search : ^(.+?)$
+Replace: javascript:$1

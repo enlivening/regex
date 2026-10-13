@@ -1,0 +1,375 @@
+        <Macro name="--- PRR → KQL Process -----------------------------" Ctrl="no" Alt="no" Shift="no" Key="0" />
+        <Macro name="Full Process: PRR → KQL" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="[„“”«»`‚‹›‘’´]" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="&quot;" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="[–]" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="--" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="[–]" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="-" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(^Type Of Content To Search For$|(?!\A)\G)((?:(?!^Specific terms or phrases to search$)[\s\S])*?)^(?:(Email)\r\nSelected)|(?:(Teams) Messages\r\nSelected)|(?:(Other) Content \(explain below\)\r\nSelected)$" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1$2\(Kind:$3$4$5\)" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="((?&lt;=\(Kind:Email\))|(?&lt;=\(Kind:Teams\)))\r\n(?=\(Kind\:)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="( OR )" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="\(Kind\:Teams\)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\(ItemClass:IPM.Note.Microsoft.*\)" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=Type Of Content To Search For\r\n)(.+?)(?=\r\nSpecific terms or phrases to search for$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\($1\)\r\n\t\tAND" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=Type Of Content To Search For\r\n)\t\((\([^\(\)\r\n]*\))\)(?=\r\n\t\tAND\r\nSpecific terms or phrases to search for$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Type Of Content To Search For\r\n(.*?\r\n\t\tAND\r\n)?(?=Specific terms or phrases to search for$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^(\w+(?: \w+)*) (O?NEAR(?:\(\d\))?) (\w+(?: \w+)*)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="←←←\(&quot;$1&quot; $2 &quot;$3&quot;\)" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^\&quot;([^\&quot;]+)\&quot;$" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^(?!(?:Specific terms or phrases to search for|Please List Senders and Recipients)$)(?=(?:(?!^Specific terms or phrases to search for$)[^\r\n]*\R)*?^Please List Senders and Recipients$)(?=.*[^\w\s])(?!←←←)(.*)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1\r\n→→→$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^→→→|\G).*?\K(?:[^\w\s]| )+" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="( )" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^(?:←←←|→→→)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="()" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?=(?:(?!^Specific terms or phrases to search for$|^Please List Senders and Recipients$).+?\R)+?Please List Senders and Recipients)(.+?\R)(?=(?:(?!^Specific terms or phrases to search for$|^Please List Senders and Recipients$)^.+?\R)\1)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="()" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Specific terms or phrases to search for\R)|\G(?!\A))(?!Please List Senders and Recipients$)(?:(\(.+?\)$)|&quot;?([^\r\n]+?)&quot;?)(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}$2:&quot;$3&quot;)$4" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Specific terms or phrases to search for\R)|((?:&quot;[^\r\n]+&quot;|\(.+\))(?=\R))|\G(?!\A))(?&lt;=[&quot;\)])\R(?=[&quot;\(])" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="($1$2 OR )" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Specific terms or phrases to search for\R(?:((?:&quot;[^\r\n]+&quot;|\(.+?\))(?: OR (?:&quot;[^\r\n]+&quot;|\(.+?\)))*)\R)?(?=^Please List Senders and Recipients$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\($1\)\r\n\t\tAND\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\w+)\s(\w+))|(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))|(?:(\w+)\s(\w+)\s\*\sGOV)|(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)|(?:(\w+)\s(\w+)\s\*\s(\w+))|(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))|(?:(.+?$)))$(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}$2.$3@[AGENCY].)(?{4}$4.$5.$6@[AGENCY].)(?{7}$8.$7@)(?{9}$10.$11.$9@)(?{12}$13.$12@$14.)(?{15}$16.$17.$15@$18.)(?{19}{$19})$20" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\{)(.+?)(\}))|(?:(.+?)))$(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}$3)(?{5}$5oregon.gov)$6" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(?:(^(?:.*?)@(?:.+?)$)|(^.+?))(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}\t\t\(From\:$2\) OR \(Recipients\:$2\):$3)$4" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(^.+?)(\R)(?!Date Range Start$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1$2$3\t\t\tOR$3" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Please List Senders and Recipients\R((?:.+?\R)+?(?=Date Range Start$))" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\(\r\n$1\t\)\r\n\t\tAND\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Date Range Start\R(\d)(\d)?[^\w\s](\d)(\d)?[^\w\s](\d{2})(\d{2})?\RDate Range End\R(\d)(\d)?[^\w\s](\d)(\d)?[^\w\s](\d{2})(\d{2})?\R" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\(Date:(?{6}$5$6:20$5)-(?{2}$1$2:0$1)-(?{4}$3$4:0$3)..(?{12}$11$12:20$11)-(?{8}$7$8:0$7)-(?{10}$9$10:0$9)\)\r\n\)\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Service options\r\n Customer Details\r\nCustomer\r\n(.+?)\r\nEmail\r\n[\w\-\&apos;\.]+@[\w\-\&apos;]+(?:\.[\w\-\&apos;]+)+\r\nPhone\r\n.+?\r\nDepartment\r\n.+?\r\nJob Title\r\n.+?\r\nAgency\r\n(\w{1,7})\r\nUrgency\r\n(\w+)\r\n PRR Details\r\n(?:Internal Ticket Reference #\R(.+?)\R)?((?:.*?\r\n)*?)(?:\r\nAdditional Instructions\r\n([\S\s]+))?$" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\r\n\/*\r\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n$4\r\n\r\nAgency: $2\r\nPriority: $3\r\n(?{6}Instructions:\r\n$6)\r\n\*\/\r\n\r\n\r\n\(\r\n$5\(-ItemClass:IPM.Appointment\)\r\n\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n\(-ItemClass:IPM.TaskRequest.*\)\r\n\r\n\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\r\n\r\n\r\n\/\*\r\nyour records request: SR [TICKET] \($4\)\r\n\*\/\r\n\r\n\/\*\r\n$1,\r\n\r\nYour search regarding &quot;$4&quot; is complete. It found [COUNT] results. I&apos;ve stored those to\r\n\r\n\t\\\\wpdasclr05c\\TAM_PRR\\$2\\SR[TICKET]\r\n\r\nThank you.\r\n\r\nZachary Kreft\r\nService Desk Tech\r\nDepartment of Administrative Services\r\nPhone: \(503\) 378-2135\r\n*/\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n########################################################################################################\r\n\r\n\r\n\r\n\r\n\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=\/\*\r\n)([\w\-\&apos;]+)((?: [\w\-\&apos;]+)+)(?=,\r\n\r\nYour search regarding)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(^\/\*\R(?:.*?\R)+?^Agency: )(.+)$([\S\s]+?)\z" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1$2$3{$2}" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="\[AGENCY\](?=[\S\s]*?\{(\w+)\}\z)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="\{\w+\}\z" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="()" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=@)GOV\.(oregon\.gov)\b" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+        <Macro name="    1. Normalize" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="[„“”«»`‚‹›‘’´]" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="&quot;" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="[–]" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="--" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="[–]" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="-" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+        <Macro name="    2. Kind" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(^Type Of Content To Search For$|(?!\A)\G)((?:(?!^Specific terms or phrases to search$)[\s\S])*?)^(?:(Email)\r\nSelected)|(?:(Teams) Messages\r\nSelected)|(?:(Other) Content \(explain below\)\r\nSelected)$" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1$2\(Kind:$3$4$5\)" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="((?&lt;=\(Kind:Email\))|(?&lt;=\(Kind:Teams\)))\r\n(?=\(Kind\:)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="( OR )" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="\(Kind\:Teams\)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\(ItemClass:IPM.Note.Microsoft.*\)" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=Type Of Content To Search For\r\n)(.+?)(?=\r\nSpecific terms or phrases to search for$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\($1\)\r\n\t\tAND" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=Type Of Content To Search For\r\n)\t\((\([^\(\)\r\n]*\))\)(?=\r\n\t\tAND\r\nSpecific terms or phrases to search for$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Type Of Content To Search For\r\n(.*?\r\n\t\tAND\r\n)?(?=Specific terms or phrases to search for$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+        <Macro name="    3. Search Terms" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^(\w+(?: \w+)*) (O?NEAR(?:\(\d\))?) (\w+(?: \w+)*)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="←←←\(&quot;$1&quot; $2 &quot;$3&quot;\)" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^\&quot;([^\&quot;]+)\&quot;$" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^(?!(?:Specific terms or phrases to search for|Please List Senders and Recipients)$)(?=(?:(?!^Specific terms or phrases to search for$)[^\r\n]*\R)*?^Please List Senders and Recipients$)(?=.*[^\w\s])(?!←←←)(.*)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1\r\n→→→$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^→→→|\G).*?\K(?:[^\w\s]| )+" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="( )" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^(?:←←←|→→→)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="()" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?=(?:(?!^Specific terms or phrases to search for$|^Please List Senders and Recipients$).+?\R)+?Please List Senders and Recipients)(.+?\R)(?=(?:(?!^Specific terms or phrases to search for$|^Please List Senders and Recipients$)^.+?\R)\1)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="()" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Specific terms or phrases to search for\R)|\G(?!\A))(?!Please List Senders and Recipients$)(?:(\(.+?\)$)|&quot;?([^\r\n]+?)&quot;?)(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}$2:&quot;$3&quot;)$4" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Specific terms or phrases to search for\R)|((?:&quot;[^\r\n]+&quot;|\(.+\))(?=\R))|\G(?!\A))(?&lt;=[&quot;\)])\R(?=[&quot;\(])" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="($1$2 OR )" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Specific terms or phrases to search for\R(?:((?:&quot;[^\r\n]+&quot;|\(.+?\))(?: OR (?:&quot;[^\r\n]+&quot;|\(.+?\)))*)\R)?(?=^Please List Senders and Recipients$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\($1\)\r\n\t\tAND\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+        <Macro name="    4. Participants" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\w+)\s(\w+))|(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))|(?:(\w+)\s(\w+)\s\*\sGOV)|(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)|(?:(\w+)\s(\w+)\s\*\s(\w+))|(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))|(?:(.+?$)))$(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}$2.$3@[AGENCY].)(?{4}$4.$5.$6@[AGENCY].)(?{7}$8.$7@)(?{9}$10.$11.$9@)(?{12}$13.$12@$14.)(?{15}$16.$17.$15@$18.)(?{19}{$19})$20" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\{)(.+?)(\}))|(?:(.+?)))$(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}$3)(?{5}$5oregon.gov)$6" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(?:(^(?:.*?)@(?:.+?)$)|(^.+?))(\R)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1(?{2}\t\t\(From\:$2\) OR \(Recipients\:$2\):$3)$4" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(^.+?)(\R)(?!Date Range Start$)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1$2$3\t\t\tOR$3" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Please List Senders and Recipients\R((?:.+?\R)+?(?=Date Range Start$))" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\(\r\n$1\t\)\r\n\t\tAND\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+        <Macro name="    5. Date Range" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Date Range Start\R(\d)(\d)?[^\w\s](\d)(\d)?[^\w\s](\d{2})(\d{2})?\RDate Range End\R(\d)(\d)?[^\w\s](\d)(\d)?[^\w\s](\d{2})(\d{2})?\R" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\t\(Date:(?{6}$5$6:20$5)-(?{2}$1$2:0$1)-(?{4}$3$4:0$3)..(?{12}$11$12:20$11)-(?{8}$7$8:0$7)-(?{10}$9$10:0$9)\)\r\n\)\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+        <Macro name="    6. Final Layout" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^Service options\r\n Customer Details\r\nCustomer\r\n(.+?)\r\nEmail\r\n[\w\-\&apos;\.]+@[\w\-\&apos;]+(?:\.[\w\-\&apos;]+)+\r\nPhone\r\n.+?\r\nDepartment\r\n.+?\r\nJob Title\r\n.+?\r\nAgency\r\n(\w{1,7})\r\nUrgency\r\n(\w+)\r\n PRR Details\r\n(?:Internal Ticket Reference #\R(.+?)\R)?((?:.*?\r\n)*?)(?:\r\nAdditional Instructions\r\n([\S\s]+))?$" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="\r\n\/*\r\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n$4\r\n\r\nAgency: $2\r\nPriority: $3\r\n(?{6}Instructions:\r\n$6)\r\n\*\/\r\n\r\n\r\n\(\r\n$5\(-ItemClass:IPM.Appointment\)\r\n\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n\(-ItemClass:IPM.TaskRequest.*\)\r\n\r\n\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\r\n\r\n\r\n\/\*\r\nyour records request: SR [TICKET] \($4\)\r\n\*\/\r\n\r\n\/\*\r\n$1,\r\n\r\nYour search regarding &quot;$4&quot; is complete. It found [COUNT] results. I&apos;ve stored those to\r\n\r\n\t\\\\wpdasclr05c\\TAM_PRR\\$2\\SR[TICKET]\r\n\r\nThank you.\r\n\r\nZachary Kreft\r\nService Desk Tech\r\nDepartment of Administrative Services\r\nPhone: \(503\) 378-2135\r\n*/\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n########################################################################################################\r\n\r\n\r\n\r\n\r\n\r\n" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=\/\*\r\n)([\w\-\&apos;]+)((?: [\w\-\&apos;]+)+)(?=,\r\n\r\nYour search regarding)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(^\/\*\R(?:.*?\R)+?^Agency: )(.+)$([\S\s]+?)\z" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1$2$3{$2}" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="\[AGENCY\](?=[\S\s]*?\{(\w+)\}\z)" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="\{\w+\}\z" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="()" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?&lt;=@)GOV\.(oregon\.gov)\b" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>

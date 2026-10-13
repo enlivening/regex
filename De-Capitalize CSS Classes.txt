@@ -1,0 +1,19 @@
+*** Turn on case-sensitive searching ***
+
+
+Search : (?<=\bclass=\")([A-Z])(?:(?=[a-z])|(?=\s)|(?=\"))
+Replace: \l$1
+ × 1
+
+Search : (?<=\bclass=\")((?:[\w\-]+\-)*)([A-Z])(?:(?=[a-z])|(?=\s)|(?=\"))
+Replace: $1\l$2
+ × 10
+
+
+Search : (?<=\bclass=\")([\w\-]+\s+)([A-Z])(?:(?=[a-z])|(?=\s)|(?=\"))
+Replace: $1\l$2
+ × 1
+ 
+Search : (?<=\bclass=\")((?:[\w\-]+\s+)*?)([A-Z])(?:(?=[a-z])|(?=\s)|(?=\"))
+Replace: $1\l$2
+ × 10

@@ -1,0 +1,150 @@
+Regular Expressions in Notepad++ | General Specifications
+
+Please Note: Generic expressions will be illustrated here using a single character ellipsis, (…). It can be taken to
+             refer to any text or regex pattern that might be appropriate in the given context.
+
+Character Representation
+	
+	• Dot
+	  Symbol: .
+	  Description: Matches any single character except newline
+	
+	• Character Class
+	  Symbol: […]
+	  Descrption: Matches any character or range of characters within the brackets. Represents single character.
+	
+	• Range
+	  Symbol: …-…
+	  Description: Matches any character within the range of the first character to the last (inclusive). It operates
+	               within character class brackets. So [0-9a-f] would match any hexadecimal digit.
+	
+	• Character Escapes
+	  Symbol: \…
+	  Description: Match a specified character or group of characters. They are represented by a single letter,
+	               following a backslash (capitalization matters with these). Each refers to a single instance of a
+	               character. The most commonly used ones are:
+				
+				• Word
+				  Symbol: \w
+	              Description: Matches any alphanumeric ("word") character. It derives from the programming practivce
+				               of variable names containing letters and numbers. It doesn't match the underscore,
+				               however.
+				• Digits
+				  Symbol: \d
+				  Description: Represents any single digit (0–9).
+				
+				• Whitespace
+				  Symbol: \s
+				  Description: Matches any of the standard kind of spaces, those contained by (or generated from) the
+				               keyboard. They include: space (spacebar), tab, carriage return, or line feed,
+				               essentially the ascii spaces. Other Unicode spaces will not match, for example, the non-
+				               breaking space (&nbsp;), which prints as if there's nothing there between the
+				               surrounding characters but still represents a character between the two at the string
+				               level.
+				
+				• Tab
+				  Symbol: \t
+				  Description: Represents a single keyboard tab. Although this key usually displays multiple
+				               characters' worth of spaces, \t itself represents exactly one character in the text.
+				
+				• Non-Whitespace
+				  Symbol: \S
+				  Description: Matches any character that's not whitespace.
+				  
+				• Line Breaks
+				  Symbols: \r (carriage return), \n (newline), \R (matches either \r\n or \n, equivalent to \r?\n)
+				  Description: These represent all of the line endings created by the Enter key. There are two basic
+				               ways to represent this ending in code: the first is the one used by the entire world,
+				               except Microsoft, uses the newline character, \n, to represent this. Microsoft uses the
+				               carriage return (\r) character, followed by new line (\n). Carriage return is a holdover
+				               from typewriters and represents the motion of sliding the carriage back to the left in
+				               order to start a new line. So Microsoft is maintaining backward compatibility with 
+				               typewriters, and everything else uses a single character instead. The \R switch was
+				               created for compatibility with either and will match with either kind of line ending.
+				               Bear in mind that you can't use this in a replacement, since it matches more than one
+				               thing. For that you will need to use one of the two other standards, based on which 
+				               system you're using. If it's Windows, you're stuck with \r\n.
+				
+				• Punctuation Escapes
+				  Symbol: \…
+				  Description: Used for expressing characters that have special meaning in regexes, such as the
+				               asterisk, represented by \* or the backslash itself, represented by a double backslash:
+							   \\. Under certain contexts the system may recongnize it without the preceding backslash.
+							   If you're not sure if it needs one, it rarely creates a problem to put a backslash in
+							   front of a symbol. Just make sure you verify that it's really matching the way it
+							   should.
+				
+				• Hexadecimal Escapes
+				  Symbol: \x…
+				  Description: A \x followed by either two (ascii) or four (unicode) hexadecimal digits represents the
+				               character that code refers to. For example, \x20 represents a standard space. While you
+							   can use it for ordinary characters, its main use is for non-standard characters.
+				
+				
+Multiples
+	This category also includes all situations where the exact number of characters is  not certain. Each of these
+	symbols follows a distinct character or group of characters (when those characters are surrounded by parentheses).
+	Some may be described as greedy, grabbing as many of that thing as their are, or non-greedy–grabbing the minimum
+	number it's able to.
+	
+	• Symbol: …?
+	  Description: Matches if there is either one or zero of that item present.
+	
+	• Symbol: …*
+	  Description: Matches zero or more of the item.
+	
+	• Symbol: …+
+	  Description: Matches one or more consecutive instances of the item.
+	
+	• Symbol: …{N}
+	  Description: Matches when there are exactly N consecutive instances of the item.
+	
+	• Symbol: …{M,N}
+	  DescdriptioN: Matches when there are between M and N consecutive instances of the item.
+
+
+
+Look-Arounds
+	Look arounds let you ensure a particular context for a match by requiring that the adjacent text matches this
+	additional pattern without making them part of the overall match. A lone look-around will produce matches of zero
+	length, occupying the space between characters. The symbols ^ and $ are themselves a look-behind and a look-ahead,
+	respectively.
+	
+	While most commonly placed at the beginning or end of a pattern, look-arounds can occur anywhere within a regex.
+	They can be used to enforce matches within the text that may be difficult to do otherwise. Look-behinds (positive
+	or negative) must use a pattern of fixed length and will otherwise fail silently. Look-aheads don't have this
+	restriction. Look-aheads can contain capture groups. It will still have no length, but there will be an additional
+	capture group containing the matching text available to replacement operations.
+	
+	• Look-Behind
+	  Symbol: (?<=…)
+	  Description: True if the text that precedes it matches the indicated pattern. It matches a position but has zero
+	               length, lying between two characters. Please note: the pattern must have a fixed length, otherise it
+	               will fail silently.
+	
+	• Look-Ahead
+	  Symbol: (?=…)
+	  Description: True if the text that follows it matches the indicated pattern. It matches a position but has zero
+	               length, lying between two characters. The pattern need not have a fixed length.
+	
+	• Negative Look-Behind
+	  Symbol: (?<!…)
+	  Description: True if the text that precedes it DOES NOT match the indicated pattern. It matches a position but
+	               has zero length, lying between two characters. Please note: the pattern must have a fixed length,
+	               otherise it will fail silently.
+	
+	• Negative Look-Ahead
+	  Symbol: (?!…)
+	  Description: True if the text that follows it DOES NOT match the indicated pattern. It matches a position but has
+	               zero length, lying between two characters. The pattern need not have a fixed length.
+
+
+Conditional Matches
+	
+
+
+
+
+
+
+

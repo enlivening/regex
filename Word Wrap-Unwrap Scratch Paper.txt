@@ -1,0 +1,521 @@
+
+
+
+I should have something for that today, which I can run overnight so it will be ready first thing in the morning, or at least the total count will be. The final output after processing will be a CSV, essentially a spreadsheet file. It should be possible for us to do some simple analysis on that to get a list of the top referencers.
+
+Okay, initial results. For all participants who are DAS employees for these keywords within those dates: 24,601 hits.
+
+For the same parameters, but only those sending the messages: 8,660 hits.
+
+It's likely that deduplication would wipe out a lot of that first one. For example, if one person mentions it in a Teams chat that has twenty other people in it, that one instance counts as 21 hits. However, the deduplication isn't nearly as good as it once was. And basing it on senders tells us who's talking about it.
+
+Should I proceed with the processing both of these so we can get a spreadsheet from this? Or just one?
+
+(I'm running both to be on the safe side.)
+
+Analytics are currently running on both of them. Should have final CSV files today.
+
+Thank you Zach
+
+So it looks like I need to clean up the data a little. The reports were made before deduplication was run, meaning that it found 18,000+ results, which contains numerous copies of the 3.500 or so actual unique messages it found. Eliminating the extra rows is easy. I'm just checking which columns are best for identifying individual users (there are 163 columns). Shouldn't be too bad a job.
+
+Got results. Top five:
+
+Christina.COLE@eis.oregon.gov	693
+Tia.DeFoor@das.oregon.gov	555
+Lorie.K.CRUCE@das.oregon.gov	544
+bruno.gautier@das.oregon.gov	286
+McKenzie.ENGELKING@das.oregon.gov	227
+
+Full Results in attached spreadsheet, in the final tab (called Results). This may not be perfect, as even with deduplication, identical (or nearly identical) items can sometimes read as distinct.
+
+This is from the Senders-Only search. These numbers are based on the number of items (emails or Teams messages) the person sent. I do have the All-Participants search too, if you'd like to break it down another way. (Oh, and the full contents of the initial CSV are in the first tab.)
+Senders-Only.xlsx
+
+
+
+Negative Lookbehind
+(?<!\s)
+
+
+
+
+
+/* Word Wrap at 120 chars */
+
+Search : ^(.{1,120})\s+?(?=\S*?(?<=^.{120}))
+Replace: $1\r\n$2
+
+
+
+/* Work Unwrap */
+
+Search : (?<!\R)\R(?!\R)
+Replace: ()
+
+
+
+
+KREFT Zachary * DAS
+	6/23 2:37 PM
+I should have something for that today, which I can run overnight so it will be ready first thing in the morning, or at
+least the total count will be. The final output after processing will be a CSV, essentially a spreadsheet file. It
+should be possible for us to do some simple analysis on that to get a list of the top referencers.
+
+
+KREFT Zachary * DAS
+	6/23 3:45 PM
+Okay, initial results. For all participants who are DAS employees for these keywords within those dates: 24,601 hits.
+
+For the same parameters, but only those sending the messages: 8,660 hits.
+
+It's likely that deduplication would wipe out a lot of that first one. For example, if one person mentions it in a
+Teams chat that has twenty other people in it, that one instance counts as 21 hits. However, the deduplication isn't
+nearly as good as it once was. And basing it on senders tells us who's talking about it.
+
+Should I proceed with the processing both of these so we can get a spreadsheet from this? Or just one?
+
+(I'm running both to be on the safe side.)
+
+
+KREFT Zachary * DAS
+	6/24 11:43 AM	
+Analytics are currently running on both of them. Should have final CSV files today.
+
+
+SCHMALZ Phil * DAS
+	6/24 4:28 PM
+Thank you Zach
+
+
+KREFT Zachary * DAS
+	6/24 4:28 PM
+So it looks like I need to clean up the data a little. The reports were made before deduplication was run, meaning that
+it found 18,000+ results, which contains numerous copies of the 3.500 or so actual unique messages it found.
+Eliminating the extra rows is easy. I'm just checking which columns are best for identifying individual users (there
+are 163 columns). Shouldn't be too bad a job.
+
+
+KREFT Zachary * DAS
+	6/24 5:20 PM
+Got results. Top five:
+	Christina.COLE@eis.oregon.gov	693
+	Tia.DeFoor@das.oregon.gov	555
+	Lorie.K.CRUCE@das.oregon.gov	544
+	bruno.gautier@das.oregon.gov	286
+	McKenzie.ENGELKING@das.oregon.gov	227
+
+Full Results in attached spreadsheet, in the final tab (called Results). This may not be perfect, as even with
+deduplication, identical (or nearly identical) items can sometimes read as distinct.
+
+This is from the Senders-Only search. These numbers are based on the number of items (emails or Teams messages) the
+person sent. I do have the All-Participants search too, if you'd like to break it down another way. (Oh, and the full
+contents of the initial CSV are in the first tab.)
+Senders-Only.xlsx
+
+
+
+
+
+
+
+
+
+
+
+/* Word Wrap at 120 chars */
+
+Search : ^(.{1,120})\s+?(?=\S*?(?<=^.{120}))
+Replace: $1\r\n$2
+
+        <Macro name="    Word Wrap at 120 chars" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="^(.{1,120})\s+?(?=\S*?(?&lt;=^.{120}))" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="$1\r\n$2" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+
+
+
+/* Eliminate tabs, CRLFs, and comments */
+
+Search : (?:(?!\R\R+)(?:[\t\r\n]|^[ \t]+|[ ]{4}?\/\/.+?$|\/\*[\S\s]*?\*\/|(?<= )[ ]+))+
+Replace: ()
+
+        <Macro name="    Eliminate tabs, CRLFs, and comments" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="3" message="1700" wParam="0" lParam="0" sParam="" />
+            <Action type="3" message="1601" wParam="0" lParam="0" sParam="(?:(?!\R\R+)(?:[\t\r\n]|^[ \t]+|[ ]{4}?\/\/.+?$|\/\*[\S\s]*?\*\/|(?&lt;= )[ ]+))+" />
+            <Action type="3" message="1625" wParam="0" lParam="2" sParam="" />
+            <Action type="3" message="1602" wParam="0" lParam="0" sParam="()" />
+            <Action type="3" message="1702" wParam="0" lParam="512" sParam="" />
+            <Action type="3" message="1701" wParam="0" lParam="1609" sParam="" />
+        </Macro>
+
+
+
+
+//Negative Lookbehind:
+(?<!\s)
+
+
+
+
+/* Unwrap at 120 chars */
+
+
+Approach:
+	1. Define Region.
+	   a. Length of line <= 120 characters. (implies this line is valid)
+	   b. Length of line + next word > 120 characters (implies next line is valid)
+	   c. Region will usually and with double \R.
+	   d. Longest possible unbroken sequence of such lines.
+	2. Eliminate \R from section
+
+
+/* 1a */	^.{1,120}
+/* 1b */	(?=(?:.){120})
+
+
+
+(?=^.{1,120}\R\S*?
+
+All non-CRLF
+	followed by
+Single CRLF
+	followed by
+Exclusively non-space characters
+
+
+
+(
+	First word on next line qualification:
+		(?:(?=^([\S\s]{120}))(?=[^\r\n]{1,120}(?=\R(?=\S*?(?<=^[\S\s]{120})))))
+
+		OR
+
+	Double line-ending qualification:
+		(?=(?:[^\r\n]{1,120}\R){1,2}\R{2})
+)
+
+This line qualification:
+	^.{1,120}$
+
+
+
+
+Search : 
+
+(?:(?:(?=^([\S\s]{120}))(?=[^\r\n]{1,120}(?=\R(?=\S*?(?<=^[\S\s]{120})))))|(?=(?:[^\r\n]{1,120}\R){1,2}\R{2}))^.{1,120}$
+
+
+
+
+
+
+
+
+^(.{1,120})\R
+(?=\S*?(?<=^[^\r\n]+\R\S*
+	(\S*?)
+	(?<=(?:
+		([^\r\n]+)
+		|
+		(\R)
+		|
+		(\S+)
+	){120})
+	
+	
+)
+
+
+Search : ^(?!=[ \t])(.{1,119})(?<![ \t])\R(?=\S+(?<=^[\S\s]{120}(?=\S+[ \t])))(?=.{1,119}$)
+Replace: $1( )
+
+Search : 
+Replace: 
+
+Search : 
+Replace: 
+
+Search : 
+Replace: 
+
+
+
+
+/* Eliminate tabs, CRLFs, and comments */
+
+Search : (?:(?!\R\R+)(?:[\t\r\n]|^[ \t]+|[ ]{4}?\/\/.+?$|\/\*[\S\s]*?\*\/|(?<= )[ ]+))+
+Replace: ()
+
+
+
+
+
+
+
+
+
+
+^    // Beginning of line
+(?!=[ \t])    // Doesn't start with spaces
+(.{1,120})$    // Capture: full line that contains 1--120 non-CRLF characters
+(?<![ \t])    // Doesn't end with spaces
+\R    // CRLF separates it from the next line
+(?=\S+    // Line is followed by non-space charcters
+	(?<=
+		^[\S\s]{121}    // Those characters are preceded by 120 characters (includes CRLF) that begin at a new line
+	)
+)
+(?=.{1,120}$)    // The following line is also an acceptable word-wrapped line.
+
+
+
+^(?!=[ \t])(.{1,120})$(?<![ \t])\R(?=\S+(?<=^[\S\s]{121}))(?=.{1,120}$)
+
+
+
+
+Search : ^(?!=[ \t])(.{1,120})$(?<![ \t])\R(?=\S+(?<=^[\S\s]{120}(?=\S+)))(?=.{1,120}$)
+Replace: $1( )
+
+
+
+// Line gets longer following previous replace.
+// Try /G /A solution
+
+
+
+Search : ^(?!=[ \t])(.{1,120})$(?<![ \t])\R(?=\S+(?<=^[\S\s]{120}(?=\S+)))(?=.{1,120}$)
+Replace: $1( )
+
+
+
+/ Break each selection into the code for that kind
+Search : (^Type Of Content To Search For$|(?!\A)\G)((?:(?!^Specific terms or phrases to search$)[\s\S])*?)^(?:(Email)\r\nSelected)|(?:(Teams) Messages\r\nSelected)|(?:(Other) Content \(explain below\)\r\nSelected)$
+Replace: $1$2\(Kind:$3$4$5\)
+
+
+
+
+
+
+(^|(?!\A)\G)(\R)    // Beginning
+(?!=[ \t])    // Doesn't start with spaces
+(?=[\S\s]{121,240}(?<=\R\S+(?=\s)))     // Inital non-space characters in next line would bring total characters over 120.
+(.{1,120})$    // Capture: full line that contains 1--120 non-CRLF characters
+
+
+
+
+(?<![ \t])    // Doesn't end with spaces
+(?=\R\S+    // Line is followed by non-space charcters
+	(?<=
+		^[\S\s]{121}    // Those characters are preceded by 120 characters (includes CRLF) that begin at a new line
+	)
+)
+(?=.{1,120}$)    // The following line is also an acceptable word-wrapped line.
+
+
+
+
+
+
+
+// Combine consecutive adjacent lines of text, placing the word "or" between them.
+
+Search : ((?:^.+)(?=\R\S)|(?!\A)\G)(?<=.)(\R)(^.+$)
+Replace: $1( )or( )$3
+
+
+one or two or three or four
+
+5 or 6 or 7 or 8 or 9 or 10 or 11 or 12
+
+XIII or XIV or XV
+
+
+
+
+
+// Combine consecutive adjacent lines of text, placing quote marks around each line and then placing the word "or" between them.
+
+Search : ((?:^(.)+)(?=\R\S)|(?!\A)\G)(?<=.)(\R)(^.+$)((?!\R.))?
+Replace: (?{2}")$1"( )or( )"$4(?{5}")
+
+
+
+"one" or "two" or "three" or "four"
+
+"5" or "6" or "7" or "8" or "9" or "10" or "11" or "12"
+
+"XIII" or "XIV" or "XV"
+
+
+
+
+
+Search : 
+(^|(?!\A)\G)(\R)    // Beginning
+(?!=[ \t])    // Doesn't start with spaces
+(?=[\S\s]{121,240}(?<=\R\S+(?=\s)))     // Inital non-space characters in next line would bring total characters over 120.
+(.{1,120})$    // Capture: full line that contains 1--120 non-CRLF characters
+
+
+
+
+// Initial line is up to 120 characters
+// captured only if first word in next line bumps it above 120 characters,
+// count uses only lookahead(s)
+
+Search : 
+
+((?=[\S\s]{121,240}(?<=))^(?:.{1,120})|(?!\A)\G)
+
+
+
+
+
+
+^(?:
+	(?=
+		(?:
+			(?:
+				(?=.)|(?=\n)
+			)
+			[\S\s]
+		)
+	)+?(?<=\n)
+)(?=\S+(?<=[\S\s]{121,240}))
+(.{1,120})(\R)
+
+
+^(?=(.{1,120)$).+?\R\S+\s
+(?<=[\S\s]{121,240})
+
+
+^(?=.{1,120}$)
+(?=([\S\s]{121,240}))
+
+(?=(.{1,120})(?=\R\S+))
+
+(?=.+?\R\S=\s)(\1)
+
+
+(?=.+\R\S+)
+
+
+
+
+
+
+(.{1,120})(\R)
+
+
+
+
+^(?:(?=(?:(?:(?=.)|(?=\n))[\S\s]))+?(?<=\n))(.{1,120})(\R)
+
+
+
+
+(?=\S+(?<=[\S\s]{121,240}))
+
+
+
+
+
+^(?=(?:(?:(?=.)|((?=\n)))[\S\s])+)(.{1,120})
+
+
+(^.{1,120}(?=\R\S+\s)|(?!\A)\G)(\R)    // Previous line(s)
+
+(?!=[ \t])    // 
+
+
+
+(?=[\S\s]{121,240}(?<=\R?=(\S+(?=\s))))    // Inital non-space characters in next line would bring total characters over 120.
+(.{1,120})$    // Capture: full line that contains 1--120 non-CRLF characters
+
+
+Search : (^|(?!\A)\G)(\R)(?!=[ \t])(?=[\S\s]{121,240}(?<=\R\S+(?=\s)))(.{1,120})$
+Replace: $1$2 $3
+
+
+
+
+
+
+
+KREFT Zachary * DAS
+	6/23 2:37 PM
+I should have something for that today, which I can run overnight so it will be ready first thing in the morning, or at
+least the total count will be. The final output after processing will be a CSV, essentially a spreadsheet file. It
+should be possible for us to do some simple analysis on that to get a list of the top referencers.
+
+
+KREFT Zachary * DAS
+	6/23 3:45 PM
+Okay, initial results. For all participants who are DAS employees for these keywords within those dates: 24,601 hits.
+
+For the same parameters, but only those sending the messages: 8,660 hits.
+
+It's likely that deduplication would wipe out a lot of that first one. For example, if one person mentions it in a
+Teams chat that has twenty other people in it, that one instance counts as 21 hits. However, the deduplication isn't
+nearly as good as it once was. And basing it on senders tells us who's talking about it.
+
+Should I proceed with the processing both of these so we can get a spreadsheet from this? Or just one?
+
+(I'm running both to be on the safe side.)
+
+
+KREFT Zachary * DAS
+	6/24 11:43 AM	
+Analytics are currently running on both of them. Should have final CSV files today.
+
+
+SCHMALZ Phil * DAS
+	6/24 4:28 PM
+Thank you Zach
+
+
+KREFT Zachary * DAS
+	6/24 4:28 PM
+So it looks like I need to clean up the data a little. The reports were made before deduplication was run, meaning that
+it found 18,000+ results, which contains numerous copies of the 3.500 or so actual unique messages it found.
+Eliminating the extra rows is easy. I'm just checking which columns are best for identifying individual users (there
+are 163 columns). Shouldn't be too bad a job.
+
+
+KREFT Zachary * DAS
+	6/24 5:20 PM
+Got results. Top five:
+	Christina.COLE@eis.oregon.gov	693
+	Tia.DeFoor@das.oregon.gov	555
+	Lorie.K.CRUCE@das.oregon.gov	544
+	bruno.gautier@das.oregon.gov	286
+	McKenzie.ENGELKING@das.oregon.gov	227
+
+Full Results in attached spreadsheet, in the final tab (called Results). This may not be perfect, as even with
+deduplication, identical (or nearly identical) items can sometimes read as distinct.
+
+This is from the Senders-Only search. These numbers are based on the number of items (emails or Teams messages) the
+person sent. I do have the All-Participants search too, if you'd like to break it down another way. (Oh, and the full
+contents of the initial CSV are in the first tab.)
+Senders-Only.xlsx
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,238 @@
+
+
+
+
+          |---------------$1-----------| |--------------$2---------------||---$3----| 
+Search : (^{MARK START LINE}$|(?!\A)\G)((?:(?!^{MARK END LINE}$)[\s\S])*?)^\"(.*)\"$
+Replace: $1$2$3
+
+
+
+/* Search for patterns within a particular region */
+
+^ //Match occurs at the beginning of a line
+//MUST NOT:
+(?!(?:START|END)$) //Be a delimiting line.
+
+
+//MUST: (be in the region)
+(?=
+	(?:
+		(?!^START$) //Not be an opening delimiter
+		[^\r\n]*\R  //Consume entire line
+	)*?
+	^END$ //End with end-delimiting line
+)
+(?=.*[^\w\s]) //Must contain punctuation
+(.*)   //The matching content is a line of characters (it's also $1)
+
+
+
+
+
+
+--------------
+
+
+
+        <Macro name="PAGEDOWN" Ctrl="no" Alt="no" Shift="no" Key="0">
+            <Action type="0" message="2322" wParam="0" lParam="0" sParam="" />
+        </Macro>
+
+
+
+--------------
+
+
+
+
+To Add/Improve:
+
+	x Normalize Quotes
+	x Put Internal Name up top
+	x Correct (Kind:Teams)
+	x Extra Open-Comment out front
+	x Can we shorten customer's name to just first name for the email?
+	• Add line for mailboxes above search code
+	x Fix leading @ sign for participants
+	x Format keywords for use with NEAR
+	x Build out keywords containing punctuation
+	x Messes up parentheses around NEAR entries
+	• Leaving a row blank on the request appears to move the reference from the request completely,
+	  for example, Internal Ticket Reference #. Fix this so that items may be omitted without breaking
+	  the whole thing.
+    x Deal with duplicate keywords being created with spaces on both ends.
+
+
+
+
+
+
+/* -------------------------------- */
+
+
+
+
+
+
+
+
+/* 1. Normalize */
+
+// All nonstandard quotes to standard double-quotes
+Search : [„“”«»`‚‹›‘’´]
+Replace: "
+
+// All em dashes to double-hyphens
+Search : [–]
+Replace: --
+
+// All en dashes to single-hyphens
+Search : [–]
+Replace: -
+
+
+
+
+/* 2. Kind */
+
+// Break each selection into the code for that kind
+Search : (^Type Of Content To Search For$|(?!\A)\G)((?:(?!^Specific terms or phrases to search$)[\s\S])*?)^(?:(Email)\r\nSelected)|(?:(Teams) Messages\r\nSelected)|(?:(Other) Content \(explain below\)\r\nSelected)$
+Replace: $1$2\(Kind:$3$4$5\)
+
+// OR multiple selections together
+Search : ((?<=\(Kind:Email\))|(?<=\(Kind:Teams\)))\r\n(?=\(Kind\:)
+Replace: ( OR )
+
+// Convert Teams marker to correct code
+Search : \(Kind\:Teams\)
+Replace: \(ItemClass:IPM.Note.Microsoft.*\)
+
+// Wrap in parentheses and add AND
+Search : (?<=Type Of Content To Search For\r\n)(.+?)(?=\r\nSpecific terms or phrases to search for$)
+Replace: \t\($1\)\r\n\t\tAND
+
+// Insert Tabs
+Search : (?<=Type Of Content To Search For\r\n)\t\((\([^\(\)\r\n]*\))\)(?=\r\n\t\tAND\r\nSpecific terms or phrases to search for$)
+Replace: \t$1
+
+// Remove Start marker
+Search : ^Type Of Content To Search For\r\n(.*?\r\n\t\tAND\r\n)?(?=Specific terms or phrases to search for$)
+Replace: $1
+
+
+
+
+
+
+
+
+/* 3. Search Terms */
+
+// Format NEAR expressions and mark them with leading LEFT arrows
+Search : ^(\w+(?: \w+)*) (O?NEAR(?:\(\d\))?) (\w+(?: \w+)*)
+Replace: ←←←\("$1" $2 "$3"\)
+
+// Remove double-quotes around full lines of text
+Search : ^\"([^\"]+)\"$
+Replace: $1
+
+// Duplicate other lines with puncuation, marking second set with leading RIGHT arrows for conversion of punctuation to spaces
+Search : ^(?!(?:Specific terms or phrases to search for|Please List Senders and Recipients)$)(?=(?:(?!^Specific terms or phrases to search for$)[^\r\n]*\R)*?^Please List Senders and Recipients$)(?=.*[^\w\s])(?!←←←)(.*)
+Replace: $1\r\n→→→$1
+
+// Convert puncuation in marked punctuation to spaces, consolidating them with neighboring spaces
+Search : (?:^→→→|\G).*?\K(?:[^\w\s]| )+
+Replace: ( )
+
+// Remove Markers
+Search : ^(?:←←←|→→→)
+Replace: ()
+
+// Remove duplicate lines
+Search : (?=(?:(?!^Specific terms or phrases to search for$|^Please List Senders and Recipients$).+?\R)+?Please List Senders and Recipients)(.+?\R)(?=(?:(?!^Specific terms or phrases to search for$|^Please List Senders and Recipients$)^.+?\R)\1)
+Replace: ()
+
+// Add quotation marks around individual terms
+Search : (?:^(Specific terms or phrases to search for\R)|\G(?!\A))(?!Please List Senders and Recipients$)(?:(\(.+?\)$)|"?([^\r\n]+?)"?)(\R)
+Replace: $1(?{2}$2:"$3")$4
+
+// Join lines via ORs
+Search : (?:^(Specific terms or phrases to search for\R)|((?:"[^\r\n]+"|\(.+\))(?=\R))|\G(?!\A))(?<=["\)])\R(?=["\(])
+Replace: ($1$2 OR )
+
+// Format for its place in query
+Search : ^Specific terms or phrases to search for\R(?:((?:"[^\r\n]+"|\(.+?\))(?: OR (?:"[^\r\n]+"|\(.+?\)))*)\R)?(?=^Please List Senders and Recipients$)
+Replace: \t\($1\)\r\n\t\tAND\r\n
+
+
+
+
+
+
+/* 4. Participants */
+
+// Format so that Oregon addresses are ready for processing and full line matches are marked
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\w+)\s(\w+))|(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))|(?:(\w+)\s(\w+)\s\*\sGOV)|(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)|(?:(\w+)\s(\w+)\s\*\s(\w+))|(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))|(?:(.+?$)))$(\R)
+Replace: $1(?{2}$2.$3@[AGENCY].)(?{4}$4.$5.$6@[AGENCY].)(?{7}$8.$7@)(?{9}$10.$11.$9@)(?{12}$13.$12@$14.)(?{15}$16.$17.$15@$18.)(?{19}{$19})$20
+
+// Add domains to Oregon addresses and remove full line markers
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\{)(.+?)(\}))|(?:(.+?)))$(\R)
+Replace: $1(?{2}$3)(?{5}$5oregon.gov)$6
+
+// Format emails for From/Recipients checks, and leave the rest to take up the line, unchanged
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(?:(^(?:.*?)@(?:.+?)$)|(^.+?))(\R)
+Replace: $1(?{2}\t\t\(From\:$2\) OR \(Recipients\:$2\):$3)$4
+
+// Insert ORs between lines
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(^.+?)(\R)(?!Date Range Start$)
+Replace: $1$2$3\t\t\tOR$3
+
+// Format to fit into extant code
+Search : ^Please List Senders and Recipients\R((?:.+?\R)+?(?=Date Range Start$))
+Replace: \t\(\r\n$1\t\)\r\n\t\tAND\r\n
+
+
+
+
+/* 5. Date Range */
+
+// Reformat dates, one- vs two- vs four-digits.
+Search : ^Date Range Start\R(\d)(\d)?[^\w\s](\d)(\d)?[^\w\s](\d{2})(\d{2})?\RDate Range End\R(\d)(\d)?[^\w\s](\d)(\d)?[^\w\s](\d{2})(\d{2})?\R
+Replace: \t\(Date:(?{6}$5$6:20$5)-(?{2}$1$2:0$1)-(?{4}$3$4:0$3)..(?{12}$11$12:20$11)-(?{8}$7$8:0$7)-(?{10}$9$10:0$9)\)\r\n\)\r\n
+
+
+
+
+
+/* 6. Final Layout */
+
+// Draw out data points, handle missing information, and reformat into useful material.
+Search : ^Service options\r\n Customer Details\r\nCustomer\r\n(.+?)\r\nEmail\r\n[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+\r\nPhone\r\n.+?\r\nDepartment\r\n.+?\r\nJob Title\r\n.+?\r\nAgency\r\n(\w{1,7})\r\nUrgency\r\n(\w+)\r\n PRR Details\r\n(?:Internal Ticket Reference #\R(.+?)\R)?((?:.*?\r\n)*?)(?:\r\nAdditional Instructions\r\n([\S\s]+))?$
+Replace: \r\n\/*\r\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n$4\r\n\r\nAgency: $2\r\nPriority: $3\r\n(?{6}Instructions:\r\n$6)\r\n\*\/\r\n\r\n\r\n\(\r\n$5\(-ItemClass:IPM.Appointment\)\r\n\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n\(-ItemClass:IPM.TaskRequest.*\)\r\n\r\n\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\r\n\r\n\r\n\/\*\r\nyour records request: SR [TICKET] \($4\)\r\n\*\/\r\n\r\n\/\*\r\n$1,\r\n\r\nYour search regarding "$4" is complete. It found [COUNT] results. I've stored those to\r\n\r\n\t\\\\wpdasclr05c\\TAM_PRR\\$2\\SR[TICKET]\r\n\r\nThank you.\r\n\r\nZachary Kreft\r\nService Desk Tech\r\nDepartment of Administrative Services\r\nPhone: \(503\) 378-2135\r\n*/\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n########################################################################################################\r\n\r\n\r\n\r\n\r\n\r\n
+
+// Remove requestor's last name from email address.
+Search : (?<=\/\*\r\n)([\w\-\']+)((?: [\w\-\']+)+)(?=,\r\n\r\nYour search regarding)
+Replace: $1
+
+// Store Agency abbreviation at end of file so it's easy to find.
+Search : (^\/\*\R(?:.*?\R)+?^Agency: )(.+)$([\S\s]+?)\z
+Replace: $1$2$3{$2}
+
+// Use a lookahead to capture the value at the end and use it to plug in values for [AGENCY].
+Search : \[AGENCY\](?=[\S\s]*?\{(\w+)\}\z)
+Replace: $1
+
+// Remove Agency from end of file.
+Search : \{\w+\}\z
+Replace: ()
+
+// Fix any erroneous governor's office addresses.
+Search : (?<=@)GOV\.(oregon\.gov)\b
+Replace: $1
+
+
+
+
+
+

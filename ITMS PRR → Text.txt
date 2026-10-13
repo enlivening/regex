@@ -1,0 +1,618 @@
+
+/* OR Search Terms */
+
+Search : (?<=^Specific terms of phrases to search for\r\n)((?:.+?\r\n)+?)(?=Please List Senders and Recipients)
+Replace: \"$1
+
+
+Search : (?<=^Specific terms of phrases to search for\r\n)(\".+?)\r\n(?!Please List Senders and Recipients$)(.+?)$
+Replace: $1\" OR \"$2
+× 25
+
+Search : (?<=^Specific terms of phrases to search for\r\n)(\".+?)(?=\r\nPlease List Senders and Recipients$)
+Replace: \($1\"\)
+
+
+
+-----------------------------------
+
+
+
+/* Transform Date Range */
+
+Search : ^Date Range (Start|End)\r\n(\d)[\/\-](\d)[\/\-](\d\d)$
+Replace: $1:20$4-0$2-0$3
+
+Search : ^Date Range (Start|End)\r\n(\d)[\/\-](\d)[\/\-](\d\d\d\d)$
+Replace: $1:$4-0$2-0$3
+
+Search : ^Date Range (Start|End)\r\n(\d)[\/\-](\d\d)[\/\-](\d\d)$
+Replace: $1:20$4-0$2-$3
+
+Search : ^Date Range (Start|End)\r\n(\d)[\/\-](\d\d)[\/\-](\d\d\d\d)$
+Replace: $1:$4-0$2-$3
+
+Search : ^Date Range (Start|End)\r\n(\d\d)[\/\-](\d)[\/\-](\d\d)$
+Replace: $1:20$4-$2-0$3
+
+Search : ^Date Range (Start|End)\r\n(\d\d)[\/\-](\d)[\/\-](\d\d\d\d)$
+Replace: $1:$4-$2-0$3
+
+Search : ^Date Range (Start|End)\r\n(\d\d)[\/\-](\d\d)[\/\-](\d\d)$
+Replace: $1:20$4-$2-$2
+
+Search : ^Date Range (Start|End)\r\n(\d\d)[\/\-](\d\d)[\/\-](\d\d\d\d)$
+Replace: $1:$4-$2-$3
+
+Search : ^Start:(\d\d\d\d\-\d\d-\d\d)\r\nEnd:(\d\d\d\d\-\d\d-\d\d)$
+Replace: \(Date:$1..$2\)
+
+
+
+
+-----------------------------------
+
+
+
+
+/* Kind */
+
+Search : 
+(?<=^Type Of Content To Search For\r\n)
+(?:(Email)\r\nSelected\r\n)?
+(?:(Teams) Messages\r\nSelected\r\n)?
+(?:(Other) Content \(explain below\)\r\nSelected\r\n)?
+(?=Specific terms of phrases to search for\r\n)
+Replace:
+(?{1}\(Kind:$1\)\r\n:())
+(?{2}\(Kind:$2\)\r\n:())
+(?{3}\(Kind:$3\)\r\n:())
+
+Search : (?<=^Type Of Content To Search For\r\n)(\Kind:(?:Email|Teams))\r\n(\Kind:(?:Teams|Other))
+Replace: $1 OR $2
+
+Search : (?<=^Type Of Content To Search For\r\n)(\Kind:(?:Email|Teams))\r\n(\Kind:(?:Teams|Other))
+Replace: $1 OR $2
+
+Search : (?<=^Type Of Content To Search For\r\n)(.+?)(?=\r\nSpecific terms of phrases to search for\r\n)
+Replace: \($1\)
+
+
+
+
+-----------------------------------
+
+
+
+
+/* Participants */
+
+{
+	Search : ^(?<=Please List Senders and Recipients\r\n)((?:[\w\-\']+@(?:[\w\-\']+\.)+[\w\-\']\r\n)+)([\w\-\']+) ([\w\-\']+) (?:(\w) )?\* (GOV)$
+	Replace: $1$3.(?{4}$4.:())$2@oregon.gov
+
+	Search : ^(?<=Please List Senders and Recipients\r\n)((?:[\w\-\']+@(?:[\w\-\']+\.)+[\w\-\']\r\n)+)([\w\-\']+) ([\w\-\']+) (?:(\w) )?\* (\w{3,7})$
+	Replace: $1$3.(?{4}$4.:())$2@\L$5\E.oregon.gov
+} × 25
+
+Search : (?<=Please List Senders and Recipients\r\n)([\w\-\']+@(?:[\w\-\']+\.)+[\w\-\'])$
+Replace: \(\(From:$1\) OR \(Recipients:$1\)\)
+
+Search : (?<=Please List Senders and Recipients\r\n)(\(\(From\b.+?\)\))\r\n([\w\-\']+@(?:[\w\-\']+\.)+[\w\-\'])$
+Replace: $1 OR \(\(From:$2\) OR \(Recipients:$2\)\)
+× 25
+
+Search : (?<=Please List Senders and Recipients\r\n)(\(\(.+?\)\))(?=\r\nDate Range Start)
+Replace: \($1\)
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+/* Restructure Text */
+Search : Service options\r\n\sCustomer Details\r\nCustomer\r\n(.+?)\r\n[\S\s]*?Agency\r\n(.+?)\r\nUrgency\r\n(.+?)\r\n[\S\s]*?Internal Ticket Reference #\r\n(.+?)\r\nType Of Content To Search For\r\n([\S\s]*?)\r\nSpecific terms of phrases to search for\r\n(.+?)\r\nPlease List Senders and Recipients\r\n([\S\s]*?)\r\n.*?(\(Date:.+?\))[\S\s]*?Additional Instructions\r\n((?:.*?\r\n){1,10})
+Replace:      Customer: $1\r\n  Description: $4\r\n     Priority: $3\r\n       Agency: $2\r\n        Dates: $8\r\nSearch Terms: \r\n$6\r\n\r\n\r\n         Kind: \r\n$5\r\n\r\n\r\n  Recipients: \r\n$7\r\n\r\n\r\nInstructions: \r\n$9\r\n
+
+
+
+
+Search : 
+Service options\r\n
+\sCustomer Details\r\n
+Customer\r\n
+(.+?)\r\n
+[\S\s]*?\r\n
+Agency\r\n(.+?)\r\n
+Urgency\r\n(.+?)\r\n
+[\S\s]*?\r\n
+Internal Ticket Reference #\r\n
+(.+?)\r\n
+Type Of Content To Search For\r\n
+([\S\s]*?)\r\n
+Specific terms or phrases to search for\r\n
+(.+?)\r\n
+Please List Senders and Recipients\r\n
+(($:.+?\r\n)*?)
+(\(Date:.+?\))[\S\s]*?\r\n
+Additional Instructions\r\n
+((?:.*?\r\n){1,10})
+
+
+Please List Senders and Recipients\r\n(($:.+?\r\n)*?)(\(Date:.+?\))[\S\s]*?\r\nAdditional Instructions\r\n((?:.*?\r\n){1,10})
+
+
+
+Search Values:
+	$1 Customer
+	$4 Name
+	$3 priority
+	$2 Agency\r\n
+	$8 Dates\r\n
+	$6 Search Terms
+	$5 Kind
+	$7 Recipients
+	$9 Instructions
+
+
+
+
+
+Formatting String:
+
+     Customer: $1\r\n
+
+
+         Name: $4\r\n
+     Priority: $3\r\n
+       Agency: $2\r\n
+        Dates: $8\r\n
+ Search Terms: \r\n
+$6\r\n
+\r\n
+         Kind: \r\n
+$5\r\n
+\r\n
+   Recipients: \r\n
+$7\r\n
+\r\n
+
+
+
+
+
+
+
+
+
+
+
+\/*\r\n
+r\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n\r\n\r\n
+Agency: $2\r\nPriority: $3\r\n
+Instructions: \r\n$9\r\n\r\n\
+*\/\r\n\r\n\r\n
+\(\r\n
+\t$8\r\n
+\t\tAND\r\n
+\t$6\r\n
+\t\tAND\r\n
+\t\(Kind:$5\)\r\n
+\t\tAND\r\n
+\t$7\r\n
+\)\r\n
+\(-ItemClass:IPM.Appointment\)\r\n
+\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n
+\(-ItemClass:IPM.TaskRequest.*\)\r\n
+\r\n\r\n\r\n\r\n\r\n
+
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+
+\r\n\r\n\r\n\r\n
+\/\*\r\n
+your records request: SR [TICKET] \($4\)\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+$1,\r\n
+\r\n
+Your search regarding "$4" is complete. It found [COUNT] results. I've stored those to\r\n
+\r\n
+\t\\wpdasclr05c\TAM_PRR\GOV\SR[TICKET]\r\n
+\r\n
+Thank you.\r\n
+\r\n
+Zachary Kreft\r\n
+Service Desk Tech\r\n
+Department of Administrative Services\r\n
+Phone: \(503\) 378-2135\r\n
+*/\r\n
+\r\n
+\r\n
+\r\n\r\n\r\n\r\n\r\n
+########################################################################################################\r\n
+\r\n\r\n\r\n\r\n\r\n
+
+
+
+Search : Service options\r\n\sCustomer Details\r\nCustomer\r\n(.+?)\r\n[\S\s]*?\r\nAgency\r\n(.+?)\r\nUrgency\r\n(.+?)\r\n[\S\s]*?\r\nInternal Ticket Reference #\r\n(.+?)\r\nType Of Content To Search For\r\n([\S\s]*?)\r\nSpecific terms or phrases to search for\r\n(.+?)\r\nPlease List Senders and Recipients\r\n(($:.+?\r\n)*?)(\(Date:.+?\))[\S\s]*?\r\nAdditional Instructions\r\n((?:.*?\r\n){1,10})
+Replace: \/*\r\nr\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n\r\n\r\nAgency: $2\r\nPriority: $3\r\nInstructions: \r\n$9\r\n\r\n\*\/\r\n\r\n\r\n\(\r\n\t$8\r\n\t\tAND\r\n\t$6\r\n\t\tAND\r\n\t\(Kind:$5\)\r\n\t\tAND\r\n\t$7\r\n\)\r\n\(-ItemClass:IPM.Appointment\)\r\n\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n\(-ItemClass:IPM.TaskRequest.*\)\r\n\r\n\r\n\r\n\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\r\n\r\n\r\n\r\n\/\*\r\nyour records request: SR [TICKET] \($4\)\r\n\*\/\r\n\r\n\/\*\r\n$1,\r\n\r\nYour search regarding "$4" is complete. It found [COUNT] results. I've stored those to\r\n\r\n\t\\wpdasclr05c\TAM_PRR\GOV\SR[TICKET]\r\n\r\nThank you.\r\n\r\nZachary Kreft\r\nService Desk Tech\r\nDepartment of Administrative Services\r\nPhone: \(503\) 378-2135\r\n*/\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n########################################################################################################\r\n\r\n\r\n\r\n\r\n\r\n
+
+
+
+
+         LAST            FIRST            MIDDLE
+^([\w\-\'])([\w\-\']+) ([\w\-\']+) (?:([\w\-\']) )? \* (\w{1,7})$
+   $2            $3        $4             $5               $6
+
+
+
+
+
+/* Participants */
+
+{
+	/* First [Middle] Last */
+	Search : (?<=^Please List Senders and Recipients\r\n)((?:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\r\n)*?)^([\w\-\']+) (?:([\w\-\']) )?([\w\-\']+)$
+	Replace: $1$2\.(?{3}$3\.)$4@[AGENCY].oregon.gov
+
+
+	/* LAST First [Middle] * GOV */
+	Search : (?<=^Please List Senders and Recipients\r\n)((?:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\r\n)*?)^([\w\-\'])([\w\-\']+) ([\w\-\']+) (?:([\w\-\']) )?\* (GOV)$
+	Replace: $1$4.(?{5}$5.)$2\L$3\E@oregon.gov
+
+
+	/* LAST First [Middle] * Agency */
+	Search : (?<=^Please List Senders and Recipients\r\n)((?:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\r\n)*?)^([\w\-\'])([\w\-\']+) ([\w\-\']+) (?:([\w\-\']) )?\* (\w{1,7})$
+	Replace: $1$4.(?{5}$5.)$2\L$3\E@\L$6\E.oregon.gov
+}  × 25
+
+
+/* Replace [AGENCY] */
+Search : (?<=^Agency\r\n)(\w{1,7})(\r\n(?:.*?\r\n)*?)([\w\-\'\.]+@)\[AGENCY\]((?:\.[\w\-\']+)+)$
+Replace: $1$2$3\L$1\E$4
+× 25
+
+
+/* Assemble Participants */
+Search : (?<=^Please List Senders and Recipients\r\n)((?:\(.+?\) OR \(.+?\)\r\n)*?)^([\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)$
+Replace: $1\(From:$2\) OR \(Recipients:$2\)
+× 25
+
+
+/* OR Participants Together */
+Search : ^(\(\w+:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\)(?:(?: OR \(\w+:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\)))+)\r\n(\(\w+:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\)(?:(?: OR \(\w+:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\)))+)$
+Replace: $1 OR $2
+× 25
+
+
+/* Parentheses */
+Search : ^Please List Senders and Recipients\r\n(\(\w+:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\)(?:(?: OR \(\w+:(?:[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+)\)))+)$
+Replace: \($1\)\r\n\tAND
+
+
+
+#####################################################
+\/*\r\n
+r\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n\r\n\r\n
+Agency: $2\r\nPriority: $3\r\n
+Instructions: \r\n$9\r\n\r\n\
+*\/\r\n\r\n\r\n
+\(\r\n
+\t$8\r\n
+\t\tAND\r\n
+\t$6\r\n
+\t\tAND\r\n
+\t\(Kind:$5\)\r\n
+\t\tAND\r\n
+\t$7\r\n
+\)\r\n
+\(-ItemClass:IPM.Appointment\)\r\n
+\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n
+\(-ItemClass:IPM.TaskRequest.*\)\r\n
+\r\n\r\n\r\n\r\n\r\n
+
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+
+\r\n\r\n\r\n\r\n
+\/\*\r\n
+your records request: SR [TICKET] \($4\)\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+$1,\r\n
+\r\n
+Your search regarding "$4" is complete. It found [COUNT] results. I've stored those to\r\n
+\r\n
+\t\\wpdasclr05c\TAM_PRR\GOV\SR[TICKET]\r\n
+\r\n
+Thank you.\r\n
+\r\n
+Zachary Kreft\r\n
+Service Desk Tech\r\n
+Department of Administrative Services\r\n
+Phone: \(503\) 378-2135\r\n
+*/\r\n
+\r\n
+\r\n
+\r\n\r\n\r\n\r\n\r\n
+########################################################################################################\r\n
+\r\n\r\n\r\n\r\n\r\n
+
+
+
+
+#####################################################
+
+
+
+
+
+Search Values:
+	$1 Customer
+	$4 Name
+	$3 priority
+	$2 Agency\r\n
+	-------------
+	$8 Dates\r\n
+	$6 Search Terms
+	$5 Kind
+	$7 Recipients
+	$9 Instructions
+
+----------
+
+	$5 Code
+	$6 Instructions
+
+
+
+#####################################################
+
+
+
+Search : 
+Service options\r\n
+\sCustomer Details\r\n
+Customer\r\n
+(.+?)\r\n
+[\S\s]*?\r\n
+Agency\r\n(.+?)\r\n
+Urgency\r\n(.+?)\r\n
+[\S\s]*?\r\n
+Internal Ticket Reference #\r\n
+(.+?)\r\n
+Type Of Content To Search For\r\n
+([\S\s]*?)\r\n
+Specific terms or phrases to search for\r\n
+(.+?)\r\n
+Please List Senders and Recipients\r\n
+(($:.+?\r\n)*?)
+(\(Date:.+?\))[\S\s]*?\r\n
+Additional Instructions\r\n
+((?:.*?\r\n){1,10})
+
+
+Please List Senders and Recipients\r\n(($:.+?\r\n)*?)(\(Date:.+?\))[\S\s]*?\r\nAdditional Instructions\r\n((?:.*?\r\n){1,10})
+
+
+
+
+
+
+#####################################################
+
+^Service options\r\n
+ Customer Details\r\n
+Customer\r\n
+(.+?)\r\n
+Email\r\n
+[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+\r\n
+Phone\r\n
+.+?\r\n
+Department\r\n
+.+?\r\n
+Job Title\r\n
+.+?\r\n
+Agency\r\n
+(\w{1,7})\r\n
+Urgency\r\n
+(\w+)\r\n
+ PRR Details\r\n
+Internal Ticket Reference #\r\n
+([\S\s]+?)\r\n
+Type Of Content To Search For\r\n((?:.+?\r\n)*?)(?:\r\nAdditional Instructions\r\n([\S\s]+))?$
+
+
+
+
+
+
+#####################################################
+\/*\r\n
+r\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n\r\n\r\n
+Agency: $2\r\nPriority: $3\r\n
+
+(?{6}Instructions:\r\n$6)\r\n
+\*\/\r\n
+\r\n\r\n\r\n\r\n
+
+\(\r\n
+\(
+$5
+\(-ItemClass:IPM.Appointment\)\r\n
+\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n
+\(-ItemClass:IPM.TaskRequest.*\)\r\n
+\r\n\r\n\r\n\r\n\r\n
+
+\/\*\r\n
+\r\n\r\n\r\n
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+\r\n
+\*\/\r\n\r\n
+
+\r\n\r\n\r\n\r\n
+\/\*\r\n
+your records request: SR [TICKET] \($4\)\r\n
+\*\/\r\n\r\n
+\/\*\r\n
+$1,\r\n
+\r\n
+Your search regarding "$4" is complete. It found [COUNT] results. I've stored those to\r\n
+\r\n
+\t\\wpdasclr05c\\TAM_PRR\\$2\\SR[TICKET]\r\n
+\r\n
+Thank you.\r\n
+\r\n
+Zachary Kreft\r\n
+Service Desk Tech\r\n
+Department of Administrative Services\r\n
+Phone: \(503\) 378-2135\r\n
+*/\r\n
+\r\n
+\r\n
+\r\n\r\n\r\n\r\n\r\n
+########################################################################################################\r\n
+\r\n\r\n\r\n\r\n\r\n
+
+
+
+
+
+
+
+
+#####################################################
+
+Run Macro: KQL | Kind
+Run Macro: KQL | Search Terms
+Run Macro: KQL | Participants
+Run Macro: KQL | Date Range
+Run Macro: KQL | Final Layout
+
+Search : ^Service options\r\n Customer Details\r\nCustomer\r\n(.+?)\r\nEmail\r\n[\w\-\'\.]+@[\w\-\']+(?:\.[\w\-\']+)+\r\nPhone\r\n.+?\r\nDepartment\r\n.+?\r\nJob Title\r\n.+?\r\nAgency\r\n(\w{1,7})\r\nUrgency\r\n(\w+)\r\n PRR Details\r\nInternal Ticket Reference #\r\n([\S\s]+?)\r\nType Of Content To Search For\r\n((?:.+?\r\n)+?)(?:\r\nAdditional Instructions\r\n([\S\s]+))
+Replace: \/*\r\nr\n\r\n$1\r\nSR [TICKET]\r\n\(SR[TICKET]\)\r\n\r\n\r\nAgency: $2\r\nPriority: $3\r\n(?{6}Instructions:\r\n$6)\r\n\*\/\r\n\r\n\r\n\r\n\r\n\(\r\n\($5\(-ItemClass:IPM.Appointment\)\r\n\(-ItemClass:IPM.Schedule.Meeting.*\)\r\n\(-ItemClass:IPM.TaskRequest.*\)\r\n\r\n\r\n\r\n\r\n\r\n\/\*\r\n\r\n\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\/\*\r\n\r\n\*\/\r\n\r\n\r\n\r\n\r\n\r\n\/\*\r\nyour records request: SR [TICKET] \($4\)\r\n\*\/\r\n\r\n\/\*\r\n$1,\r\n\r\nYour search regarding "$4" is complete. It found [COUNT] results. I've stored those to\r\n\r\n\t\\wpdasclr05c\TAM_PRR\GOV\SR[TICKET]\r\n\r\nThank you.\r\n\r\nZachary Kreft\r\nService Desk Tech\r\nDepartment of Administrative Services\r\nPhone: \(503\) 378-2135\r\n*/\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n########################################################################################################\r\n\r\n\r\n\r\n\r\n\r\n
+
+#####################################################
+
+
+
+
+
+
+/*
+r
+
+Cameron Miles
+SR [TICKET]
+(SR[TICKET])
+
+Name: Ryan(2) 08.24.26
+Agency: GOV
+Priority: Medium
+
+
+*/
+
+
+(
+	((Kind:Email))
+		AND
+	("Roger Worthington" OR "Worthington @ Caron" OR "@rgwpc.com" OR "@worthington-caron.com")
+		AND
+	((From:Danny.Moran@gov.oregon.gov) OR (Recipients:Danny.Moran@gov.oregon.gov) OR (From:Danny.A.Moran@gov.oregon.gov) OR (Recipients:Danny.A.Moran@gov.oregon.gov) OR (From:danny.moran@oregon.gov) OR (Recipients:danny.moran@oregon.gov) OR (From:Danny.Moran@oregon.gov) OR (Recipients:Danny.Moran@oregon.gov) OR (From:DANNY.A.Moran@das.oregon.gov) OR (Recipients:DANNY.A.Moran@das.oregon.gov))
+		AND
+	(Date:2025-06-01..2026-08-24)
+)
+(-ItemClass:IPM.Appointment)
+(-ItemClass:IPM.Schedule.Meeting.*)
+(-ItemClass:IPM.TaskRequest.*)
+
+
+
+
+
+/*
+
+
+
+/*
+
+*/
+
+/*
+
+*/
+
+
+
+
+
+/*
+your records request: SR [TICKET] (Ryan(2) 08.24.26)
+*/
+
+/*
+Cameron Miles,
+
+Your search regarding "Ryan(2) 08.24.26" is complete. It found [COUNT] results. I've stored those to
+
+	\wpdasclr05c\TAM_PRR\GOV\SR[TICKET]
+
+Thank you.
+
+Zachary Kreft
+Service Desk Tech
+Department of Administrative Services
+Phone: (503) 378-2135
+*/
+
+
+
+
+
+
+
+########################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,483 @@
+/* First [Middle] Last */
+/* LAST First [Middle] * GOV */
+/* LAST First [Middle] * Agency */
+
+
+
+
+First Last
+First Middle Last
+LAST First * GOV
+LAST First M * GOV
+LAST First * AGCY
+LAST First M * AGCY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Replace: 
+$1
+(?{1}$1.$2@[AGENCY].)
+(?{3}$3.$4.$5@[AGENCY].)
+(?{6}$7.$6@)
+(?{8}$9.$10.$8@)
+(?{11}$12.$11@\U$13\E.)
+(?{14}$15.$16.$14@\U$17\E.)
+(?{18}{[\($18\)]})
+
+
+
+
+Replace:
+$1(?{2}$2.$3@[AGENCY].)
+(?{4}$4.$5.$6@[AGENCY].)
+(?{7}$8.$7@)
+(?{9}$10.$11.$9@)
+(?{12}$13.$12@$14.)
+(?{15}$16.$17.$15@$18.)
+(?{19}[$19]\\)
+oregon.gov$20
+
+
+
+
+
+Search : (\$)?(\{)?18(?!d)(\})?
+Replace: (?{2}{19}:\$19)
+
+
+
+(?{1}$1.$2@[AGENCY].)
+(?{3}$3.$4.$5@[AGENCY].)
+(?{6}$7.$6@)
+(?{8}$10.$11.$8@)
+(?{12}$13.$12@\U$14\E.)
+(?{15}$16.$17.$15@\U$18\E.)
+(?{1$10{[\($1$10\)]})
+
+
+
+Search : 
+(?:^(Please List Senders and Recipients\R)|\G(?!\A))
+(?!Date Range Start$)
+^(?:
+	(?:(\w+)\s(\w+))                        # First($2) Last($3)
+		|
+	(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))      # First($4) M($5)[iddle] Last($6)
+		|
+	(?:(\w+)\s(\w+)\s\*\sGOV)              # LAST($7) First($8) * GOV
+		|
+	(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)       # LAST($9) First($10) M($11) * GOV
+		|
+	(?:(\w+)\s(\w+)\s\*\s(\w+))           # LAST($12) First($13) * Agency($14)
+			|
+	(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))    # LAST($15) First($16) M($17) * Agency($18)
+	    |
+	(?:(.+?$))                              # Single line of text($19)
+)
+$(\R)
+
+
+Replace: 
+$1
+(?{2}$1.$3@[AGENCY].)
+(?{4}$4.$5.$6@[AGENCY].)
+(?{7}$8.$7@)
+(?{9}$10.$11.$9@)
+(?{12}$13.$12@\U$14\E.)
+(?{15}$16.$17.$15@\U$18\E.)
+(?{19}{[\($19\)]})
+
+
+
+
+
+          |---------------$1-----------| |--------------$2---------------||---$3----| 
+Search : (^{MARK START LINE}$|(?!\A)\G)((?:(?!^{MARK END LINE}$)[\s\S])*?)^\"(.*)\"$
+Replace: $1$2$3
+
+
+Search : (^START$|(?!\A)\G)((?:(?!^STOP$)[\s\S])*?)((?!^STOP$)^.+\R)
+Replace: $1$2$3
+
+
+(^START$|(?!\A)\G)((?:(?!^STOP$)[^\r\n]+\R)*?)((?!^STOP$)^.+\R)
+
+
+(^START\R)((?!^STOP$)^.+\R)*(^STOP$)
+
+
+
+
+
+
+
+
+Search : (^START\R|(?!\A)\G)((?!^STOP$)^.+\R)
+Replace: $1$2
+
+
+
+
+
+
+
+
+
+
+Search : 
+(?:^(Please List Senders and Recipients\R)|\G(?!\A))    # ($1)
+(?!Date Range Start$)
+^(?:
+	(?:(\w+)\s(\w+))    # First($2) Last($3)
+		|
+	(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))    # First($4) Middle($5) Last($6)
+		|
+	(?:(\w+)\s(\w+)\s\*\sGOV)    # LAST($7) First($8) * GOV
+		|
+	(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)    # LAST($9) First($10) M($11) * GOV
+		|
+	(?:(\w+)\s(\w+)\s\*\s(\w+))    # LAST($12) First($13) * AGCY($14)
+		|
+	(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))    # LAST($15) First($16) M($17) * AGCY($18)
+		|
+	(?:(.+?$)))    # Generic Line of Text ($19)
+$(\R)    # ($20)
+
+
+
+
+
+Replace: 
+
+$1
+(?{2}$2.$3@[AGENCY].)
+(?{4}$4.$5.$6@[AGENCY].)
+(?{7}$8.$7@)
+(?{9}$10.$11.$9@)
+(?{12}$13.$12@\L$14\E.)
+(?{15}$16.$17.$15@\L$18\E.)
+(?{19}{$19})
+$20
+
+
+
+
+(?<=.)\R[ \t]+(?=.)
+
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\w+)\s(\w+))|(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))|(?:(\w+)\s(\w+)\s\*\sGOV)|(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)|(?:(\w+)\s(\w+)\s\*\s(\w+))|(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))|(?:(.+$)))$(\R)
+Replace: $1(?{2}$2.$3@[AGENCY].)(?{4}$4.$5.$6@[AGENCY].)(?{7}$8.$7@)(?{9}$10.$11.$9@)(?{12}$13.$12@\L$14\E.)(?{15}$16.$17.$15@\L$18\E.)(?{19}{$19})$20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Search : 
+(?:^(Please List Senders and Recipients\R)|\G(?!\A))    # ($1)
+(?!Date Range Start$)
+^(?:
+	(?:(\w+)\s(\w+))    # First($2) Last($3)
+		|
+	(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))    # First($4) Middle($5) Last($6)
+		|
+	(?:(\w+)\s(\w+)\s\*\sGOV)    # LAST($7) First($8) * GOV
+		|
+	(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)    # LAST($9) First($10) M($11) * GOV
+		|
+	(?:(\w+)\s(\w+)\s\*\s(\w+))    # LAST($12) First($13) * AGCY($14)
+		|
+	(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))    # LAST($15) First($16) M($17) * AGCY($18)
+		|
+	(?:(.+?$))    # Generic Line of Text ($19)
+)
+$(\R)    # ($20)
+
+
+
+
+
+Replace: 
+
+$1                                  # "Please List Senders and Recipients" | [Previous Lines] → Echo Back
+(?{2}$2.$3@[AGENCY].)             # First($2) Last($3) → First.LAST@[AGENCY].
+(?{4}$4.$5.$6@[AGENCY].)        # First($4) Middle($5) Last($6) → First.Middle.Last@[AGENCY].
+(?{7}$8.$7@)                       # LAST($7) First($8) * GOV → First.LAST@
+(?{9}$10.$11.$9@)                # LAST($9) First($10) M($11) * GOV → First.M.LAST@
+→(?{12}$13.$12@\L$14\E.)          # LAST($12) First($13) * AGCY($14) → First.LAST@[AGENCY].
+→(?{15}$16.$17.$15@\L$18\E.)     # LAST($15) First($16) M($17) * AGCY($18) → First.M.LAST@[AGENCY].
+(?{19}{$19})                       # Generic Line of Text ($19)
+$20                                 # \R
+
+
+-------------------------------------
+
+
+Medium
+ PRR Details
+	((Kind:Email) OR (ItemClass:IPM.Note.Microsoft.*))
+		AND
+	("2026-600" OR "2026 600" OR "Yoder" OR "Wicks" OR "Central Oregon Real Estate Properties")
+		AND
+Please List Senders and Recipients
+nenah.y.darville@rea.oregon.gov
+kaely.salem@rea.oregon.gov
+reagan.vandorp@rea.oregon.gov
+steve.stode@rea.oregon.gov
+
+
+
+Medium
+ PRR Details
+	((Kind:Email) OR (ItemClass:IPM.Note.Microsoft.*))
+		AND
+	("2026-600" OR "2026 600" OR "Yoder" OR "Wicks" OR "Central Oregon Real Estate Properties")
+		AND
+Please List Senders and Recipients
+..{nenah.y.darville@rea.oregon.gov}
+..{kaely.salem@rea.oregon.gov}
+..{reagan.vandorp@rea.oregon.gov}
+..{steve.stode@rea.oregon.gov}
+
+
+
+Zachary Kreft
+Zachary Durand Kreft
+Zachary D Kreft
+Zachary D. Kreft
+KREFT Zachary * GOV
+KREFT Zachary D * GOV
+KREFT Zachary * DAS
+KREFT Zachary D * DAS
+Zachary.D.KREFT@das.oregon.gov
+
+
+
+Service options
+ Customer Details
+Customer
+Mesheal Tracy
+Email
+mesheal.l.tracy@rea.oregon.gov
+Phone
++1 (971) 7193544
+Department
+Management Team - REA
+Job Title
+Communication, Policy and DEBI Director
+Agency
+REA
+Urgency
+Medium
+ PRR Details
+	((Kind:Email) OR (ItemClass:IPM.Note.Microsoft.*))
+		AND
+	("2026-600" OR "2026 600" OR "Yoder" OR "Wicks" OR "Central Oregon Real Estate Properties")
+		AND
+Please List Senders and Recipients
+Zachary Kreft
+Zachary Durand Kreft
+Zachary D Kreft
+Zachary D. Kreft
+KREFT Zachary * GOV
+KREFT Zachary D * GOV
+KREFT Zachary * DAS
+KREFT Zachary D * DAS
+Zachary.D.KREFT@das.oregon.gov
+@oac.oregon.gov
+Date Range Start
+08/05/2026
+Date Range End
+09/02/2026
+
+
+
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\w+)\s(\w+))|(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))|(?:(\w+)\s(\w+)\s\*\sGOV)|(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)|(?:(\w+)\s(\w+)\s\*\s(\w+))|(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))|(?:(.+?$)))$(\R)
+Replace: $1(?{2}$2.$3@[AGENCY].)(?{4}$4.$5.$6@[AGENCY].)(?{7}$8.$7@)(?{9}$10.$11.$9@)(?{12}$13.$12@$14.)(?{15}$16.$17.$15@$18.)(?{19}{$19})$20
+
+
+
+Search : 
+(?:^(Please List Senders and Recipients\R)|\G(?!\A))    # ($1)
+(?!Date Range Start$)
+^(?:
+	(?:(\{)(.+?)(\}))    # ($2)($3)($4)
+		|
+	(?:(.+?))    # ($5)
+)
+$(\R)    # ($6)
+
+
+Replace: 
+$1
+(?{2}$3)
+(?{5}$5oregon.gov)
+$6
+
+
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\{)(.+?)(\}))|(?:(.+?)))$(\R)
+Replace: $1(?{2}$3)(?{5}$5oregon.gov)$6
+
+
+
+Service options
+ Customer Details
+Customer
+Mesheal Tracy
+Email
+mesheal.l.tracy@rea.oregon.gov
+Phone
++1 (971) 7193544
+Department
+Management Team - REA
+Job Title
+Communication, Policy and DEBI Director
+Agency
+REA
+Urgency
+Medium
+ PRR Details
+	((Kind:Email) OR (ItemClass:IPM.Note.Microsoft.*))
+		AND
+	("2026-600" OR "2026 600" OR "Yoder" OR "Wicks" OR "Central Oregon Real Estate Properties")
+		AND
+Please List Senders and Recipients
+Zachary.Kreft@[AGENCY].oregon.gov
+Zachary.D.Kreft@[AGENCY].oregon.gov
+Zachary.D.Kreft@[AGENCY].oregon.gov
+Zachary.D.Kreft@[AGENCY].oregon.gov
+Zachary.KREFT@oregon.gov
+Zachary.D.KREFT@oregon.gov
+Zachary.KREFT@DAS.oregon.gov
+Zachary.D.KREFT@DAS.oregon.gov
+Zachary.D.KREFT@das.oregon.gov
+Date Range Start
+08/05/2026
+Date Range End
+09/02/2026
+
+
+
+
+
+
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\w+)\s(\w+))|(?:(\w+)\s(\w)(?:\w*)\.?\s(\w+))|(?:(\w+)\s(\w+)\s\*\sGOV)|(?:(\w+)\s(\w+)\s(\w)\s\*\sGOV)|(?:(\w+)\s(\w+)\s\*\s(\w+))|(?:(\w+)\s(\w+)\s(\w)\s\*\s(\w+))|(?:(.+?$)))$(\R)
+Replace: $1(?{2}$2.$3@[AGENCY].)(?{4}$4.$5.$6@[AGENCY].)(?{7}$8.$7@)(?{9}$10.$11.$9@)(?{12}$13.$12@$14.)(?{15}$16.$17.$15@$18.)(?{19}{$19})$20
+
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)^(?:(?:(\{)(.+?)(\}))|(?:(.+?)))$(\R)
+Replace: $1(?{2}$3)(?{5}$5oregon.gov)$6
+
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(?:(^(?:.*?)@(?:.+?)$))(\R)
+Replace: $1\t\t\(From\:$2\) OR \(Recipients\:$2\)$3
+
+Search : (?:^(Please List Senders and Recipients\R)|\G(?!\A))(?!Date Range Start$)(^.+?)(\R)(?!Date Range Start$)
+Replace: $1$2$3\t\t\tOR$3
+
+Search : ^Please List Senders and Recipients\R((?:.+?\R)+?(?=Date Range Start$))
+Replace: \t\(\r\n$1\t\)\r\n\t\tAND\r\n
+
+
+
+
+Service options
+ Customer Details
+Customer
+Mesheal Tracy
+Email
+mesheal.l.tracy@rea.oregon.gov
+Phone
++1 (971) 7193544
+Department
+Management Team - REA
+Job Title
+Communication, Policy and DEBI Director
+Agency
+REA
+Urgency
+Medium
+ PRR Details
+	((Kind:Email) OR (ItemClass:IPM.Note.Microsoft.*))
+		AND
+	("2026-600" OR "2026 600" OR "Yoder" OR "Wicks" OR "Central Oregon Real Estate Properties")
+		AND
+	(
+		(From:Zachary.Kreft@[AGENCY].oregon.gov) OR (Recipients:Zachary.Kreft@[AGENCY].oregon.gov)
+			OR
+		(From:Zachary.D.Kreft@[AGENCY].oregon.gov) OR (Recipients:Zachary.D.Kreft@[AGENCY].oregon.gov)
+			OR
+		(From:Zachary.D.Kreft@[AGENCY].oregon.gov) OR (Recipients:Zachary.D.Kreft@[AGENCY].oregon.gov)
+			OR
+		(From:Zachary.D.Kreft@[AGENCY].oregon.gov) OR (Recipients:Zachary.D.Kreft@[AGENCY].oregon.gov)
+			OR
+		(From:Zachary.KREFT@oregon.gov) OR (Recipients:Zachary.KREFT@oregon.gov)
+			OR
+		(From:Zachary.D.KREFT@oregon.gov) OR (Recipients:Zachary.D.KREFT@oregon.gov)
+			OR
+		(From:Zachary.KREFT@DAS.oregon.gov) OR (Recipients:Zachary.KREFT@DAS.oregon.gov)
+			OR
+		(From:Zachary.D.KREFT@DAS.oregon.gov) OR (Recipients:Zachary.D.KREFT@DAS.oregon.gov)
+			OR
+		(From:Zachary.D.KREFT@das.oregon.gov) OR (Recipients:Zachary.D.KREFT@das.oregon.gov)
+			OR
+		(From:@oac.oregon.gov) OR (Recipients:@oac.oregon.gov)
+	)
+		AND
+Date Range Start
+08/05/2026
+Date Range End
+09/02/2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

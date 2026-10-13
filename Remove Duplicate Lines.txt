@@ -1,0 +1,4 @@
+/* Removes first instance of a duplicate line until only unique lines are left */
+
+Search : ^(.+?\R)(?=(?:(?:.*?\R)*?)\1)
+Replace: ()

@@ -58,10 +58,11 @@ To Add/Improve:
 	x Format keywords for use with NEAR
 	x Build out keywords containing punctuation
 	x Messes up parentheses around NEAR entries
-	• Leaving a row blank on the request appears to move the reference from the request completely,
+	x Leaving a row blank on the request appears to move the reference from the request completely,
 	  for example, Internal Ticket Reference #. Fix this so that items may be omitted without breaking
 	  the whole thing.
     x Deal with duplicate keywords being created with spaces on both ends.
+	• Add Text "After Deduplication"
 
 
 

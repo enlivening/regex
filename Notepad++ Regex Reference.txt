@@ -1,13 +1,22 @@
 Regular Expressions in Notepad++ | General Specifications
 
+
+This document is intended as a general reference for regex use in Notepad++, which uses the Boost.Regex library in C++,
+a Perl compatible form but that may differ from PCRE in edge cases. The focus here is on
+	• Quick Reference
+	• Highlighting differences with other regex implementations
+	• Explanations of less documented features
+
+
 Please Note: Generic expressions will be illustrated here using a single character ellipsis, (…). It can be taken to
              refer to any text or regex pattern that might be appropriate in the given context.
+
 
 Character Representation
 	
 	• Dot
 	  Symbol: .
-	  Description: Matches any single character except newline
+	  Description: Matches any single character except newline (\n)
 	
 	• Character Class
 	  Symbol: […]
@@ -103,6 +112,67 @@ Multiples
 	  DescdriptioN: Matches when there are between M and N consecutive instances of the item.
 
 
+Capturing Matches and Replacing Text
+	One handy thing about regexes is that you can use them as a suped up Search and Replace. For example, you can
+	replace the British form of the word "color" with its American form:
+	
+		Search : \bcolou?r\b
+		Replace: color
+	
+	But it can also do more powerful things. When you mark a portion of your regex with parentheses around it, that
+	portion of text is said to be captured. The captured text is represented by a dollar sign followed by a number
+	They are numbered by the order in which their opening parenthesis occurs. For example:
+	
+		Search : (superb)(an)a(n)a
+		Text: superbanana
+	
+	Here we have three capture groups: 
+	
+		$1 superb
+		$2 an
+		$3 n
+	
+	plus the full match, which is always contained in $0 and does not need to be captured separately.
+	
+		$0 superbanana
+	
+	Please note: It's only a capture group if the opening parenthesis IS NOT immediately followed by a question mark.
+	The presence of a question mark makes it a different kind of thing. You can even use parentheses to group a portion
+	of the match together without turning into a capture group by using a question mark followed by a colon: (?:…) will
+	let you treet the entire group as a single unit.
+	
+	The dollar sign notation will represent the captured text inside the replacement, but  you can also refer to it
+	within that pattern itself by using a backslash, rather than a dollar sign. This is useful for capturing repeated
+	text, as in
+	
+		Search : ^(.+?\R)(?=(?:(?:.*?\R)*?)\1)
+		Replace: ()
+	
+	This one uses a lookahead to check whether the current line ever occurs again, using \1 to look for that match. It
+	then removes the current line entirely if such a match exists. A replace-all will therefore ensure every line is
+	unique. (There's not a good way to retain the first instance and remove all others, as lookbehinds must have a fixed
+	length match.)
+	
+	Capture groups can be nested and placed around any portion of text that needs to be known separately from the
+	rest of the match. These can let you reassemble a match differently than it was originally constructed:
+	
+		Search : (?:\+?1[\ -]?)?\(?(\d{3})\)?[\- ]?(\d{3})\-(\d{4})
+		Replace: $1-$2-$3
+		Text   : (503) 378-2135
+		Result : 503-378-2135
+	
+	For example, the above regex will find and reformat any American phone number into the same standard format. In a
+	search/replace, anything not explicitly captured will be eliminated and replaced by the pattern you create for its
+	replacement.
+	
+	You can also mix things around, presenting the matches themselves in a comletely different order:
+	
+		Search : (\w+(?: \w)?) (\w+)
+		Replace: $2, $1
+		
+	This one will reorder a person's name from [FIRST] [LAST] to [LAST], [FIRST] or even with a middle initial from 
+	[FIRST] [M] [LAST] to [LAST], [FIRST] [M].
+
 
 Look-Arounds
 	Look arounds let you ensure a particular context for a match by requiring that the adjacent text matches this
@@ -140,9 +210,135 @@ Look-Arounds
 
 
 Conditional Matches
+	Conditional matching allows you to have different responses based on what part of a regex was matched. It's based
+	on the same numbering used for capture groups. They're structured as
+	
+		(?{…}PATTERN-IF-TRUE:PATTERN-IF-FALSE)
+		
+	where the elipsis is the number of the capture group being tested. If it's found, it uses the first pattern, if not,
+	it uses the second one, following the colon. If there's nothing for the false condition, you can omit it and the
+	colon completely. Here are some examples
+	
+		Search : (\w+)(?:\.(\w))?\.(\w+)@(?:(\w+)\.)?oregon\.gov
+		Replace: $3 $1(?{2} $2) * (?{4}$4:GOV)
+		Text   : zachary.kreft@das.oregon.gov
+		         zachary.d.kreft@oregon.gov
+		Result : kreft zachary * das
+		         kreft zachary d * GOV
+	
+	This one will transform our standard email formatting into that person's Display Name (aside from capitalization,
+	or course).
 	
 
+Continguous Matching
+	The \G anchor is used for matching within contiguous pieces of text, matching only the place where the previous
+	match ended. This makes it useful for things like making changes to discrete sections of text.  An example:
+	
+		Search : (?:^(Start\R)|\G(?!\A))(?!Stop$)(?:(\(.+?\)$)|"?([^\r\n]+?)"?)(\R)
+		Replace: $1(?{2}$2:"$3")$4
+		Text   : no
+		         not this
+		         not this one either
+		         more irrelevancy
+		         Start
+		         This
+		         (That)
+		         THe other THing
+		           ambidextrous
+		         double-shot of espresso
+		         "more"
+		         multi-dodecahedron
+		         Stop
+		         Don't get this one!
+		Result : no
+		         not this
+		         not this one either
+		         more irrelevancy
+		         Start
+		         "This"
+		         (That)
+		         "THe other THing"
+		         "  ambidextrous"
+		         "double-shot of espresso"
+		         "more"
+		         "multi-dodecahedron"
+		         Stop
+		         Don't get this one!
+	
+	This regex adds double-quotes around each line of text between lines that say Start and Stop. Here's what's going on.
+	
+		First Section: (?:^(Start\R)|\G(?!\A))(?!Stop$)
+	
+	This portion is responsible for ensuring that we're looking in the right section. It must be at either
+	
+		• the start of the section
+	OR
+		• the first position after the last search
+	
+	Adding the Not Stop lookahead at the end simply imposes a requirement that this line not be the Stop line either.
+	The Negative Lookahead of \A after the \G ensures that it's not just matching the beginning of the file but must
+	either start at the Start line or contiguous with matches that were.
+	
+	The first capture group is the Start line. Subsequent matches will match the zero-width \G anchor and therefore
+	contain nothing in $1. This makes it safe to always include $1 at the beginning of the replace because it will
+	always either be what we want there or be empty.
+	
+		Second Section: (?:(\(.+?\)$)|"?([^\r\n]+?)"?)(\R)
+	
+	This is another OR-ed section that allows either
+	
+		• an item wrapped in parentheses 
+	OR
+		• a line of text that may or may not have quotation marks
+	
+	Both of these require that the match go to the end of the line. The conditional match on $2 will allow a thing in
+	parentheses to stay as it is. If it's not a string, it will strip off any existing quotation marks so that when it
+	adds quotes around the match, a line with quotes will look unchanged. The EOL delimiter is captured in $4 and
+	used to end this line with it.
+	
+	So a final overview of the distinct steps of the matches:
+	
+		$1 – The first iteration can only have the Start line here (everything above will be ignored).
+		     All other iterations have the zero-width \G match that ensures they're on the right line.
+		$2 – Only exists on the line that contains (That), where the conditional will ensure that it's left alone.
+		$3 – Exists as the content of the text for all the remaining lines that precede Stop, excluding any quotation
+		     marks. The conditional ensures that this will only occur on lines without parentheses around them
+		$4 – The end of line marker: either \n or \r\n, based on the local operating system. It ensures that each line
+		     remains its own line.
+	
+	These continue on until the negative lookahead for Stop becomes false. This kicks it out of contiguous matching,
+	leaving the next text alone, until or unless it finds another Start line.
+	
+	There are other useful patterns that you can use \G for, but this is one of the most useful. To implement it for
+	other situations, try this:
+	
+		Search : (?:^([START-SYMBOL][ITEM-DELIMITER])|\G(?!\A))(?![STOP-SYMBOL])(?:[YOUR-REGEX-FU])([DELIMITER])
+		Replace: $1(?{2}$2:[TRANSFORM-$3+])$[CAPTURED-DELIMITER-NUMBER]
+	
+	This pattern will work for anything with distinct start/stop symols and a known delimiter separating them. You can
+	modify this to add other means of separating items without too much difficulty.
 
+
+Named Groups and Subroutines
+	Both of these declare the the name the same way:
+		(?<name>…)
+			or
+		(?'name'…)
+		
+	Named Groups (const value)
+		Reuse
+			\k<name>
+				or
+			\g{name}
+		
+		Replacement
+			$+{name}
+	
+	Subroutines (reuse pattern)
+		(?&name)
+		
+	Subroutines can also be declared separately in a definition area up front without matching anything:
+		(?(DEFINE)(?<name1>…)(?<name2>…))
 
 
 
